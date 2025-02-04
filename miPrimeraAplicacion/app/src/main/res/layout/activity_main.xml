@@ -8,11 +8,12 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <EditText
         android:id="@+id/num1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Num 1: ejm 5"
+        android:hint=" ejm 2"
         android:inputType="numberDecimal"
         android:padding="8dp" />
 
@@ -21,7 +22,7 @@
         android:id="@+id/num2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Num 2: ejm 6"
+        android:hint=" ejm 3"
         android:inputType="numberDecimal"
         android:padding="8dp" />
 
@@ -80,6 +81,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Factorial" />
+
+
+        <RadioButton
+            android:id="@+id/radioModulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Módulo" />
+
+        <RadioButton
+            android:id="@+id/radioMayor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mayor de 2 números" />
     </RadioGroup>
 
 
