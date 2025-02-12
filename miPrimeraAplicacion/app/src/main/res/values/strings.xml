@@ -1,10 +1,21 @@
 <resources>
-    <string name="app_name">miPrimeraAplicacion</string>
-    <string name="hola">Hola Mundo</string>
-    <string-array name="opciones">
-        <item>Suma</item>
-        <item>Resta</item>
-        <item>Multiplicacion</item>
-        <item>Division</item>
+    <string name="app_name">Conversor Modular</string>
+
+
+    <string-array name="tipo_conversion">
+        <item>Monedas</item>
+        <item>Magnitudes</item>
+    </string-array>
+
+
+    <string-array name="opciones_conversion">
+        <item>EUR</item>
+        <item>USD</item>
+        <item>GBP</item>
+        <item>MXN</item>
+        <item>Metros</item>
+        <item>Centímetros</item>
+        <item>Kilómetros</item>
+        <item>Milímetros</item>
     </string-array>
 </resources>

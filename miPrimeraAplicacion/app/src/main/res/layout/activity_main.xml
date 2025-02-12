@@ -1,119 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tabHost"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-
-    <EditText
-        android:id="@+id/num1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint=" ejm 2"
-        android:inputType="numberDecimal"
-        android:padding="8dp" />
-
-
-    <EditText
-        android:id="@+id/num2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint=" ejm 3"
-        android:inputType="numberDecimal"
-        android:padding="8dp" />
-
-
-    <RadioGroup
-        android:id="@+id/radioGroupOperaciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/radioSuma"
+        <TabWidget
+            android:id="@android:id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Suma" />
+            android:layout_height="wrap_content" />
 
-        <RadioButton
-            android:id="@+id/radioResta"
+        <FrameLayout
+            android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Resta" />
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <RadioButton
-            android:id="@+id/radioMultiplicacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Multiplicación" />
+            <LinearLayout
+                android:id="@+id/tab1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <RadioButton
-            android:id="@+id/radioDivision"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="División" />
+                <EditText
+                    android:id="@+id/etMonto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese monto"
+                    android:inputType="numberDecimal" />
 
-        <RadioButton
-            android:id="@+id/radioExponente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Exponente" />
+                <Spinner
+                    android:id="@+id/spinnerMonedaEntrada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        <RadioButton
-            android:id="@+id/radioPorcentaje"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Porcentaje" />
+                <Spinner
+                    android:id="@+id/spinnerMonedaSalida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-        <RadioButton
-            android:id="@+id/radioRaiz"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Raíz" />
+                <Button
+                    android:id="@+id/btnConvertirMoneda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Convertir" />
 
-        <RadioButton
-            android:id="@+id/radioFactorial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Factorial" />
+                <TextView
+                    android:id="@+id/tvResultadoMoneda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Resultado:"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/tab2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <RadioButton
-            android:id="@+id/radioModulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Módulo" />
+                <EditText
+                    android:id="@+id/etMasa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese masa"
+                    android:inputType="numberDecimal" />
 
-        <RadioButton
-            android:id="@+id/radioMayor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mayor de 2 números" />
-    </RadioGroup>
+                <Spinner
+                    android:id="@+id/spinnerMasaEntrada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
+                <Spinner
+                    android:id="@+id/spinnerMasaSalida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/resultado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Respuesta:"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"
-        android:padding="8dp" />
+                <Button
+                    android:id="@+id/btnConvertirMasa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Convertir" />
 
+                <TextView
+                    android:id="@+id/tvResultadoMasa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Resultado:"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/btnCalcular"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Calcular"
-        android:backgroundTint="#6200EE"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="16dp"
-        android:padding="12dp" />
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/tab3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/etVolumen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese volumen"
+                    android:inputType="numberDecimal" />
+
+                <Spinner
+                    android:id="@+id/spinnerVolumenEntrada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/spinnerVolumenSalida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnConvertirVolumen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Convertir" />
+
+                <TextView
+                    android:id="@+id/tvResultadoVolumen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Resultado:"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/etLongitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese longitud"
+                    android:inputType="numberDecimal" />
+
+                <Spinner
+                    android:id="@+id/spinnerLongitudEntrada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/spinnerLongitudSalida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnConvertirLongitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Convertir" />
+
+                <TextView
+                    android:id="@+id/tvResultadoLongitud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Resultado:"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/etAlmacenamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese almacenamiento"
+                    android:inputType="numberDecimal" />
+
+                <Spinner
+                    android:id="@+id/spinnerAlmacenamientoEntrada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/spinnerAlmacenamientoSalida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnConvertirAlmacenamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Convertir" />
+
+                <TextView
+                    android:id="@+id/tvResultadoAlmacenamiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Resultado:"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/etTiempo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese tiempo"
+                    android:inputType="numberDecimal" />
+
+                <Spinner
+                    android:id="@+id/spinnerTiempoEntrada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/spinnerTiempoSalida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnConvertirTiempo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Convertir" />
+
+                <TextView
+                    android:id="@+id/tvResultadoTiempo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Resultado:"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/etTransferencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ingrese transferencia"
+                    android:inputType="numberDecimal" />
+
+                <Spinner
+                    android:id="@+id/spinnerTransferenciaEntrada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/spinnerTransferenciaSalida"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnConvertirTransferencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Convertir" />
+
+                <TextView
+                    android:id="@+id/tvResultadoTransferencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Resultado:"
+                    android:paddingTop="16dp" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</TabHost>
