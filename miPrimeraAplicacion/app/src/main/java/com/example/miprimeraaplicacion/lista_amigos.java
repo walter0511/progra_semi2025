@@ -57,7 +57,7 @@ public class lista_amigos extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.mimenu, menu);
+        inflater.inflate(R.menu.menu, menu);
         try {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             posicion = info.position;
@@ -85,7 +85,7 @@ public class lista_amigos extends Activity {
         }
     }
     private void abriVentana(){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, com.ugb.miprimeraaplicacion.MainActivity.class);
         intent.putExtras(parametros);
         startActivity(intent);
     }
