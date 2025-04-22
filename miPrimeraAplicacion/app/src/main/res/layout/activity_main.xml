@@ -9,70 +9,82 @@
 
     <EditText
         android:id="@+id/txtNombre"
-        android:hint="Nombre"
+        android:hint="@string/nombre_del_producto"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        tools:ignore="Autofill,TextFields" />
+
     <EditText
-        android:id="@+id/txtDireccion"
-        android:hint="Direccion"
+        android:id="@+id/txtPrecio"
+        android:hint="@string/precio"
+        android:inputType="numberDecimal"
         android:layout_below="@id/txtNombre"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        tools:ignore="Autofill" />
+
     <EditText
-        android:id="@+id/txtTelefono"
-        android:hint="Telefono"
-        android:layout_below="@id/txtDireccion"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:id="@+id/txtCosto"
+        android:hint="@string/costo"
+        android:inputType="numberDecimal"
+        android:layout_below="@id/txtPrecio"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        tools:ignore="Autofill" />
+
     <EditText
-        android:id="@+id/txtEmail"
-        android:hint="Email"
-        android:layout_below="@id/txtTelefono"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:id="@+id/txtGanancias"
+        android:hint="@string/ganancias"
+        android:inputType="numberDecimal"
+        android:layout_below="@id/txtCosto"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:id="@+id/txtDui"
-        android:hint="Dui"
-        android:layout_below="@id/txtEmail"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ImageButton
-        android:id="@+id/imgFotoAmigo"
-        android:layout_below="@id/txtDui"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        tools:ignore="Autofill" />
+
+    <ImageView
+        android:id="@+id/imgFotoProducto"
+        android:layout_below="@id/txtGanancias"
+        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher_round"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        tools:ignore="ContentDescription" />
+
     <Button
-        android:id="@+id/btnGuardarAmigo"
-        android:text="Guardar Amigo"
-        android:layout_below="@id/imgFotoAmigo"
+        android:id="@+id/btnGuardarProducto"
+        android:text="@string/guardar_producto"
+        android:layout_below="@id/imgFotoProducto"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabListaAmigos"
+        android:id="@+id/fabListaProductos"
+        android:contentDescription="@string/todoo"
         android:src="@android:drawable/ic_menu_revert"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

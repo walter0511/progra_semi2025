@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="buscar_producto">Buscar Producto</string>
+    <string name="todo">TODO</string>
+    <string name="precio">Precio</string>
+    <string name="costo">Costo</string>
+    <string name="ganancias">Ganancias</string>
+    <string name="guardar_producto">Guardar Producto</string>
+    <string name="todoo">TODO</string>
+    <string name="nombre_del_producto">Nombre del Producto</string>
+</resources>

@@ -1,14 +1,24 @@
 package com.example.miprimeraaplicacion;
-
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DB extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "amigos";
+    private static final String DATABASE_NAME = "walter";
     private static final int DATABASE_VERSION = 1;
-    private static final String SQLdb = "CREATE TABLE amigos (idAmigo INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, direccion TEXT, telefono TEXT, email TEXT, dui TEXT, urlFoto TEXT)";
+
+
+    private static final String SQLdb = "CREATE TABLE steven  (" +
+            "idproducto TEXT PRIMARY KEY, " +
+            "nombre TEXT, " +
+            "precio TEXT, " +
+            "costo TEXT, " +
+            "ganancias TEXT, " +
+            "urlFoto TEXT)";
+
     public DB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -17,34 +27,59 @@ public class DB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQLdb);
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //Actualizar la estrucutra de la base de datos si es necesario
+        // Aquí puedes manejar las actualizaciones de base de datos si es necesario
+        db.execSQL("DROP TABLE IF EXISTS ListaProductos");
+        onCreate(db);
     }
-    public String administrar_amigos(String accion, String[] datos) {
-        try{
-            SQLiteDatabase db = getWritableDatabase();
-            String mensaje = "ok", sql = "";
+
+    public String administrar_productos(String accion, String[] datos) {
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            String mensaje = "ok";
+            ContentValues values = new ContentValues();
+
             switch (accion) {
-                case "agregar":
-                    sql = "INSERT INTO amigos (nombre, direccion, telefono, email, dui, urlFoto) VALUES ('"+ datos[1] +"', '" + datos[2] + "', '" + datos[3] + "', '" + datos[4] + "', '" + datos[5] + "', '" + datos[6] + "')";
+                case "nuevo":
+                    values.put("idproducto", datos[0]);
+                    values.put("nombre", datos[1]);
+                    values.put("precio", datos[2]);
+                    values.put("costo", datos[3]);
+                    values.put("ganancias", datos[4]);
+                    values.put("urlFoto", datos[5]);
+                    db.insertOrThrow("steven", null, values);
                     break;
                 case "modificar":
-                    sql = "UPDATE amigos SET nombre = '" + datos[1] + "', direccion = '" + datos[2] + "', telefono = '" + datos[3] + "', email = '" + datos[4] + "', dui = '" + datos[5] + "', urlFoto = '" + datos[6] + "' WHERE idAmigo = " + datos[0];
+                    values.put("nombre", datos[1]);
+                    values.put("precio", datos[2]);
+                    values.put("costo", datos[3]);
+                    values.put("ganancias", datos[4]);
+                    values.put("urlFoto", datos[5]);
+                    db.update("steven", values, "idproducto = ?", new String[]{datos[0]});
                     break;
                 case "eliminar":
-                    sql = "DELETE FROM amigos WHERE idAmigo = " + datos[0];
+                    db.delete("steven", "idproducto = ?", new String[]{datos[0]});
                     break;
+                default:
+                    return "Acción no reconocida";
             }
-            db.execSQL(sql);
-            db.close();
+            db.setTransactionSuccessful();
             return mensaje;
-        } catch (Exception e) {
-            return e.getMessage();
+        } catch (SQLException e) {
+            return "Error: " + e.getMessage();
+        } finally {
+            if (db != null) {
+                db.endTransaction();
+                db.close();
+            }
         }
     }
-    public Cursor lista_amigos() {
-        SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT * FROM amigos", null);
+
+    public Cursor lista_steven() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM steven", null);
     }
 }

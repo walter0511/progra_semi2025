@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="mnxNuevo" type="id">Nuevo</item>
+    <item name="mnxModificar" type="id">Modificar</item>
+    <item name="mnxEliminar" type="id">Eliminar</item>
+    <item name="txtPrecio" type="id">precio</item>
+    <item name="txtCosto" type="id">costo</item>
+    <item name="txtGanancias" type="id">ganancia</item>
+</resources>

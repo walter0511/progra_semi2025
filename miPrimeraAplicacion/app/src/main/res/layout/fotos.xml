@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -19,26 +20,33 @@
 
     <TextView
         android:id="@+id/lblNombreAdaptador"
+        android:layout_toEndOf="@id/imgFotoAdaptador"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="80dp"
         android:text="Juan Perez"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        tools:ignore="NotSibling" />
+
     <TextView
         android:id="@+id/lblTelefonoAdaptador"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="80dp"
+        android:layout_below="@id/lblNombreAdaptador"
+        android:layout_toEndOf="@id/imgFotoAdaptador"
+        android:layout_marginTop="10dp"
         android:text="2626-1212"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        tools:ignore="NotSibling" />
+
     <TextView
         android:id="@+id/lblEmailAdaptador"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="200dp"
+        android:layout_below="@id/lblTelefonoAdaptador"
+        android:layout_toEndOf="@id/imgFotoAdaptador"
+        android:layout_marginTop="10dp"
         android:text="juan@gmail.com"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        tools:ignore="NotSibling" />
 </RelativeLayout>

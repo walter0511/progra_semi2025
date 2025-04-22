@@ -1,20 +1,16 @@
-package com.ugb.miprimeraaplicacion;
+package com.example.miprimeraaplicacion;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
@@ -31,72 +27,73 @@ public class MainActivity extends AppCompatActivity {
     Button btn;
     TextView tempVal;
     DB db;
-    String accion = "nuevo", idAmigo = "";
+    String accion = "nuevo", idproducto = "", id = "", rev = "";
     ImageView img;
     String urlCompletaFoto = "";
     Intent tomarFotoIntent;
+    utilidades utls;
+    DetectarInternet di;
+
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        img = findViewById(R.id.imgFotoAmigo);
+        utls = new utilidades();
+        img = findViewById(R.id.imgFotoAdaptador);
         db = new DB(this);
-        btn = findViewById(R.id.btnGuardarAmigo);
-        btn.setOnClickListener(view->guardarAmigo());
+        btn = findViewById(R.id.btnGuardarProducto);
+        btn.setOnClickListener(view -> guardarProducto());
 
-        fab = findViewById(R.id.fabListaAmigos);
-        fab.setOnClickListener(view->abrirVentana());
+        fab = findViewById(R.id.ltsProductos);
+        fab.setOnClickListener(view -> abrirVentana());
 
         mostrarDatos();
         tomarFoto();
     }
-    private void mostrarDatos(){
+
+    private void mostrarDatos() {
         try {
             Bundle parametros = getIntent().getExtras();
             accion = parametros.getString("accion");
             if (accion.equals("modificar")) {
-                JSONObject datos = new JSONObject(parametros.getString("amigos"));
-                idAmigo = datos.getString("idAmigo");
+                JSONObject datos = new JSONObject(parametros.getString("producto"));
+                id = datos.getString("_id");
+                rev = datos.getString("_rev");
+                idproducto = datos.getString("idproducto");
 
-                tempVal = findViewById(R.id.txtNombre);
-                tempVal.setText(datos.getString("nombre"));
-
-                tempVal = findViewById(R.id.txtDireccion);
-                tempVal.setText(datos.getString("direccion"));
-
-                tempVal = findViewById(R.id.txtTelefono);
-                tempVal.setText(datos.getString("telefono"));
-
-                tempVal = findViewById(R.id.txtEmail);
-                tempVal.setText(datos.getString("email"));
-
-                tempVal = findViewById(R.id.txtDui);
-                tempVal.setText(datos.getString("dui"));
+                ((TextView) findViewById(R.id.txtNombre)).setText(datos.getString("nombre"));
+                ((TextView) findViewById(R.id.txtPrecio)).setText(datos.getString("precio"));
+                ((TextView) findViewById(R.id.txtCosto)).setText(datos.getString("costo"));
+                ((TextView) findViewById(R.id.txtGanancias)).setText(datos.getString("ganancias"));
 
                 urlCompletaFoto = datos.getString("urlFoto");
                 img.setImageURI(Uri.parse(urlCompletaFoto));
+            } else {
+                idproducto = utls.generarUnicoId();
             }
-        }catch (Exception e){
-            mostrarMsg("Error: "+e.getMessage());
+        } catch (Exception e) {
+            mostrarMsg("Error: " + e.getMessage());
         }
     }
-    private void tomarFoto(){
-        img.setOnClickListener(view->{
+
+    private void tomarFoto() {
+        img.setOnClickListener(view -> {
             tomarFotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File fotoAmigo = null;
-            try{
-                fotoAmigo = crearImagenAmigo();
-                if( fotoAmigo!=null ){
-                    Uri uriFotoAimgo = FileProvider.getUriForFile(MainActivity.this,
-                            "com.ugb.miprimeraaplicacion.fileprovider", fotoAmigo);
-                    tomarFotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFotoAimgo);
+            File fotoProducto;
+            try {
+                fotoProducto = crearImagenProducto();
+                if (fotoProducto != null) {
+                    Uri uriFotoProducto = FileProvider.getUriForFile(MainActivity.this,
+                            "com.example.miprimeraaplicacion.fileprovider", fotoProducto);
+                    tomarFotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFotoProducto);
                     startActivityForResult(tomarFotoIntent, 1);
-                }else{
-                    mostrarMsg("Nose pudo crear la imagen.");
+                } else {
+                    mostrarMsg("No se pudo crear la imagen.");
                 }
-            }catch (Exception e){
-                mostrarMsg("Error: "+e.getMessage());
+            } catch (Exception e) {
+                mostrarMsg("Error: " + e.getMessage());
             }
         });
     }
@@ -104,54 +101,77 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try{
-            if( requestCode==1 && resultCode==RESULT_OK ){
-                //Bitmap imagenBitmap = BitmapFactory.decodeFile(urlCompletaFoto);
+        try {
+            if (requestCode == 1 && resultCode == RESULT_OK) {
                 img.setImageURI(Uri.parse(urlCompletaFoto));
-            }else{
-                mostrarMsg("No se tomo la foto.");
+            } else {
+                mostrarMsg("No se tomó la foto.");
             }
-        }catch (Exception e){
-            mostrarMsg("Error: "+e.getMessage());
+        } catch (Exception e) {
+            mostrarMsg("Error: " + e.getMessage());
         }
     }
 
-    private File crearImagenAmigo() throws Exception{
+    private File crearImagenProducto() throws Exception {
         String fechaHoraMs = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()),
-                fileName = "imagen_"+ fechaHoraMs+"_";
+                fileName = "imagen_" + fechaHoraMs + "_";
         File dirAlmacenamiento = getExternalFilesDir(Environment.DIRECTORY_DCIM);
-        if( dirAlmacenamiento.exists()==false ){
+        if (!dirAlmacenamiento.exists()) {
             dirAlmacenamiento.mkdir();
         }
         File image = File.createTempFile(fileName, ".jpg", dirAlmacenamiento);
         urlCompletaFoto = image.getAbsolutePath();
         return image;
     }
-    private void mostrarMsg(String msg){
+
+    private void mostrarMsg(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
-    private void abrirVentana(){
-        Intent intent = new Intent(this, lista_amigos.class);
+
+    private void abrirVentana() {
+        Intent intent = new Intent(this, ListaProductos.class);
         startActivity(intent);
     }
-    private void guardarAmigo() {
-        tempVal = findViewById(R.id.txtNombre);
-        String nombre = tempVal.getText().toString();
 
-        tempVal = findViewById(R.id.txtDireccion);
-        String direccion = tempVal.getText().toString();
+    private void guardarProducto() {
+        try {
+            String nombre = ((TextView) findViewById(R.id.txtNombre)).getText().toString();
+            String precio = ((TextView) findViewById(R.id.txtPrecio)).getText().toString();
+            String costo = ((TextView) findViewById(R.id.txtCosto)).getText().toString();
+            String ganancias = ((TextView) findViewById(R.id.txtGanancias)).getText().toString();
 
-        tempVal = findViewById(R.id.txtTelefono);
-        String telefono = tempVal.getText().toString();
-        tempVal = findViewById(R.id.txtEmail);
-        String email = tempVal.getText().toString();
+            JSONObject datosProducto = new JSONObject();
+            if (accion.equals("modificar")) {
+                datosProducto.put("_id", id);
+                datosProducto.put("_rev", rev);
+            }
+            datosProducto.put("idproducto", idproducto);
+            datosProducto.put("nombre", nombre);
+            datosProducto.put("precio", precio);
+            datosProducto.put("costo", costo);
+            datosProducto.put("ganancias", ganancias);
+            datosProducto.put("urlFoto", urlCompletaFoto);
 
-        tempVal = findViewById(R.id.txtDui);
-        String dui = tempVal.getText().toString();
+            di = new DetectarInternet(this);
+            if (di.hayConexionInternet()) {
+                enviarDatosServidor objEnviarDatos = new enviarDatosServidor(this);
+                String respuesta = objEnviarDatos.execute(datosProducto.toString(), "POST", utilidades.url_mto).get();
+                JSONObject respuestaJSON = new JSONObject(respuesta);
+                if (respuestaJSON.getBoolean("ok")) {
+                    id = respuestaJSON.getString("id");
+                    rev = respuestaJSON.getString("rev");
+                } else {
+                    mostrarMsg("Error al guardar en CouchDB: " + respuestaJSON.getString("msg"));
+                }
+            }
 
-        String[] datos = {idAmigo, nombre, direccion, telefono, email, dui, urlCompletaFoto};
-        db.administrar_amigos(accion, datos);
-        Toast.makeText(getApplicationContext(), "Registro guardado con exito.", Toast.LENGTH_LONG).show();
-        abrirVentana();
+            String[] datosLocales = {idproducto, nombre, precio, costo, ganancias, urlCompletaFoto};
+            db.administrar_productos(accion, datosLocales);
+
+            Toast.makeText(getApplicationContext(), "Registro guardado con éxito en ambas bases de datos.", Toast.LENGTH_LONG).show();
+            abrirVentana();
+        } catch (Exception e) {
+            mostrarMsg("Error al guardar: " + e.getMessage());
+        }
     }
 }
