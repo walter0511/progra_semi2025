@@ -1,90 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/txtNombre"
-        android:hint="@string/nombre_del_producto"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        tools:ignore="Autofill,TextFields" />
-
-    <EditText
-        android:id="@+id/txtPrecio"
-        android:hint="@string/precio"
-        android:inputType="numberDecimal"
-        android:layout_below="@id/txtNombre"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        tools:ignore="Autofill" />
-
-    <EditText
-        android:id="@+id/txtCosto"
-        android:hint="@string/costo"
-        android:inputType="numberDecimal"
-        android:layout_below="@id/txtPrecio"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        tools:ignore="Autofill" />
-
-    <EditText
-        android:id="@+id/txtGanancias"
-        android:hint="@string/ganancias"
-        android:inputType="numberDecimal"
-        android:layout_below="@id/txtCosto"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        tools:ignore="Autofill" />
-
-    <ImageView
-        android:id="@+id/imgFotoProducto"
-        android:layout_below="@id/txtGanancias"
-        android:layout_marginTop="15dp"
-        android:layout_centerHorizontal="true"
-        android:src="@mipmap/ic_launcher"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        tools:ignore="ContentDescription" />
-
-    <Button
-        android:id="@+id/btnGuardarProducto"
-        android:text="@string/guardar_producto"
-        android:layout_below="@id/imgFotoProducto"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_centerInParent="true"
+        android:text="Tienda de Productos"
+        android:textSize="24sp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabListaProductos"
-        android:contentDescription="@string/todoo"
-        android:src="@android:drawable/ic_menu_revert"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_margin="16dp"
+        app:srcCompat="@android:drawable/ic_menu_view"/>
 </RelativeLayout>

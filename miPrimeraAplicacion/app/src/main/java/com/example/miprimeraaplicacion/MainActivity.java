@@ -1,15 +1,16 @@
 package com.example.miprimeraaplicacion;
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.Nullable;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -19,159 +20,192 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    FloatingActionButton fab;
-    Button btn;
-    TextView tempVal;
-    DB db;
-    String accion = "nuevo", idproducto = "", id = "", rev = "";
-    ImageView img;
-    String urlCompletaFoto = "";
-    Intent tomarFotoIntent;
-    utilidades utls;
-    DetectarInternet di;
+    private EditText txtNombre, txtPrecio, txtCosto, txtStock;
+    private ImageView imgProducto;
+    private Button btnGuardar;
+    private FloatingActionButton fabLista;
+    private DB db;
+    private String accion = "nuevo", idProducto = "", urlCompletaFoto = " ";
+    private utilidades utls;
+    private detectarInternet di;
 
-    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_productos);
 
         utls = new utilidades();
-        img = findViewById(R.id.imgFotoAdaptador);
         db = new DB(this);
-        btn = findViewById(R.id.btnGuardarProducto);
-        btn.setOnClickListener(view -> guardarProducto());
+        di = new detectarInternet(this);
 
-        fab = findViewById(R.id.ltsProductos);
-        fab.setOnClickListener(view -> abrirVentana());
+        txtNombre = findViewById(R.id.txtNombreProducto);
+        txtPrecio = findViewById(R.id.txtPrecio);
+        txtCosto = findViewById(R.id.txtCosto);
+        txtStock = findViewById(R.id.txtStock);
+        imgProducto = findViewById(R.id.imgProducto);
+        btnGuardar = findViewById(R.id.btnGuardarProducto);
+        fabLista = findViewById(R.id.fabListaProductos);
 
-        mostrarDatos();
-        tomarFoto();
+        btnGuardar.setOnClickListener(v -> guardarProducto());
+        fabLista.setOnClickListener(v -> abrirLista());
+        imgProducto.setOnClickListener(v -> tomarFoto());
+
+        // Manejar acción (nuevo o modificar)
+        Intent intent = getIntent();
+        accion = intent.getStringExtra("accion");
+        if (accion == null) accion = "nuevo";
+
+        if (accion.equals("modificar")) {
+            idProducto = intent.getStringExtra("idProducto");
+            if (idProducto != null) {
+                cargarDatosProducto();
+            }
+        } else {
+            idProducto = utls.generarUnicoId();
+        }
     }
 
-    private void mostrarDatos() {
-        try {
-            Bundle parametros = getIntent().getExtras();
-            accion = parametros.getString("accion");
-            if (accion.equals("modificar")) {
-                JSONObject datos = new JSONObject(parametros.getString("producto"));
-                id = datos.getString("_id");
-                rev = datos.getString("_rev");
-                idproducto = datos.getString("idproducto");
+    private void cargarDatosProducto() {
+        try (Cursor cursor = db.lista_productos()) {
+            boolean encontrado = false;
+            if (cursor.moveToFirst()) {
+                do {
+                    if (cursor.getString(0).equals(idProducto)) {
+                        txtNombre.setText(cursor.getString(1));
+                        txtPrecio.setText(String.valueOf(cursor.getDouble(3)));
+                        txtCosto.setText(String.valueOf(cursor.getDouble(4)));
+                        txtStock.setText(String.valueOf(cursor.getInt(5)));
+                        urlCompletaFoto = cursor.getString(2);
 
-                ((TextView) findViewById(R.id.txtNombre)).setText(datos.getString("nombre"));
-                ((TextView) findViewById(R.id.txtPrecio)).setText(datos.getString("precio"));
-                ((TextView) findViewById(R.id.txtCosto)).setText(datos.getString("costo"));
-                ((TextView) findViewById(R.id.txtGanancias)).setText(datos.getString("ganancias"));
-
-                urlCompletaFoto = datos.getString("urlFoto");
-                img.setImageURI(Uri.parse(urlCompletaFoto));
-            } else {
-                idproducto = utls.generarUnicoId();
+                        if (urlCompletaFoto != null && !urlCompletaFoto.isEmpty()) {
+                            Bitmap bitmap = BitmapFactory.decodeFile(urlCompletaFoto);
+                            if (bitmap != null) {
+                                imgProducto.setImageBitmap(bitmap);
+                            }
+                        }
+                        encontrado = true;
+                        break;
+                    }
+                } while (cursor.moveToNext());
+            }
+            if (!encontrado) {
+                Toast.makeText(this, "Producto no encontrado", Toast.LENGTH_SHORT).show();
+                finish();
             }
         } catch (Exception e) {
-            mostrarMsg("Error: " + e.getMessage());
+            Toast.makeText(this, "Error al cargar producto: " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
         }
     }
 
     private void tomarFoto() {
-        img.setOnClickListener(view -> {
-            tomarFotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File fotoProducto;
-            try {
-                fotoProducto = crearImagenProducto();
-                if (fotoProducto != null) {
-                    Uri uriFotoProducto = FileProvider.getUriForFile(MainActivity.this,
-                            "com.example.miprimeraaplicacion.fileprovider", fotoProducto);
-                    tomarFotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFotoProducto);
-                    startActivityForResult(tomarFotoIntent, 1);
-                } else {
-                    mostrarMsg("No se pudo crear la imagen.");
-                }
-            } catch (Exception e) {
-                mostrarMsg("Error: " + e.getMessage());
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         try {
-            if (requestCode == 1 && resultCode == RESULT_OK) {
-                img.setImageURI(Uri.parse(urlCompletaFoto));
-            } else {
-                mostrarMsg("No se tomó la foto.");
+            File fotoProducto = crearImagenProducto();
+            if (fotoProducto != null) {
+                Uri uriFotoProducto = FileProvider.getUriForFile(this,
+                        "com.example.miprimeraaplicacion.fileprovider", fotoProducto);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriFotoProducto);
+                startActivityForResult(intent, 1);
             }
         } catch (Exception e) {
-            mostrarMsg("Error: " + e.getMessage());
+            Toast.makeText(this, "Error al tomar foto: " + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
         }
     }
 
-    private File crearImagenProducto() throws Exception {
-        String fechaHoraMs = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()),
-                fileName = "imagen_" + fechaHoraMs + "_";
-        File dirAlmacenamiento = getExternalFilesDir(Environment.DIRECTORY_DCIM);
-        if (!dirAlmacenamiento.exists()) {
-            dirAlmacenamiento.mkdir();
-        }
-        File image = File.createTempFile(fileName, ".jpg", dirAlmacenamiento);
+    private File crearImagenProducto() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         urlCompletaFoto = image.getAbsolutePath();
         return image;
     }
 
-    private void mostrarMsg(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-    }
-
-    private void abrirVentana() {
-        Intent intent = new Intent(this, ListaProductos.class);
-        startActivity(intent);
+    private void abrirLista() {
+        startActivity(new Intent(this, lista_productos.class));
+        finish();
     }
 
     private void guardarProducto() {
         try {
-            String nombre = ((TextView) findViewById(R.id.txtNombre)).getText().toString();
-            String precio = ((TextView) findViewById(R.id.txtPrecio)).getText().toString();
-            String costo = ((TextView) findViewById(R.id.txtCosto)).getText().toString();
-            String ganancias = ((TextView) findViewById(R.id.txtGanancias)).getText().toString();
-
-            JSONObject datosProducto = new JSONObject();
-            if (accion.equals("modificar")) {
-                datosProducto.put("_id", id);
-                datosProducto.put("_rev", rev);
+            // Validar campos
+            String nombre = txtNombre.getText().toString().trim();
+            if (nombre.isEmpty()) {
+                Toast.makeText(this, "Ingrese el nombre del producto", Toast.LENGTH_SHORT).show();
+                return;
             }
-            datosProducto.put("idproducto", idproducto);
-            datosProducto.put("nombre", nombre);
-            datosProducto.put("precio", precio);
-            datosProducto.put("costo", costo);
-            datosProducto.put("ganancias", ganancias);
-            datosProducto.put("urlFoto", urlCompletaFoto);
 
-            di = new DetectarInternet(this);
+            double precio = Double.parseDouble(txtPrecio.getText().toString());
+            double costo = Double.parseDouble(txtCosto.getText().toString());
+            int stock = Integer.parseInt(txtStock.getText().toString());
+
+            if (precio <= 0 || costo <= 0 || stock < 0) {
+                Toast.makeText(this, "Valores inválidos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Guardar en SQLite
+            String[] datos = {
+                    idProducto,
+                    nombre,
+                    urlCompletaFoto != null ? urlCompletaFoto : "",
+                    String.valueOf(precio),
+                    String.valueOf(costo),
+                    String.valueOf(stock)
+            };
+
+            String resultado = db.administrar_productos(accion, datos);
+            if (!resultado.equals("ok")) {
+                Toast.makeText(this, "Error SQLite: " + resultado, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            // Si hay internet, sincronizar con CouchDB
             if (di.hayConexionInternet()) {
-                enviarDatosServidor objEnviarDatos = new enviarDatosServidor(this);
-                String respuesta = objEnviarDatos.execute(datosProducto.toString(), "POST", utilidades.url_mto).get();
-                JSONObject respuestaJSON = new JSONObject(respuesta);
-                if (respuestaJSON.getBoolean("ok")) {
-                    id = respuestaJSON.getString("id");
-                    rev = respuestaJSON.getString("rev");
-                } else {
-                    mostrarMsg("Error al guardar en CouchDB: " + respuestaJSON.getString("msg"));
-                }
+                JSONObject jsonProducto = new JSONObject();
+                jsonProducto.put("_id", idProducto);
+                jsonProducto.put("idProducto", idProducto);
+                jsonProducto.put("nombre", nombre);
+                jsonProducto.put("imagenUrl", urlCompletaFoto != null ? urlCompletaFoto : "");
+                jsonProducto.put("precio", precio);
+                jsonProducto.put("costo", costo);
+                jsonProducto.put("stock", stock);
+
+                String url = accion.equals("nuevo") ?
+                        utilidades.url_mto :
+                        utilidades.url_mto + "/" + idProducto;
+
+                new enviarDatosServidor(this).execute(
+                        jsonProducto.toString(),
+                        accion.equals("nuevo") ? "POST" : "PUT",
+                        url
+                );
             }
 
-            String[] datosLocales = {idproducto, nombre, precio, costo, ganancias, urlCompletaFoto};
-            db.administrar_productos(accion, datosLocales);
-
-            Toast.makeText(getApplicationContext(), "Registro guardado con éxito en ambas bases de datos.", Toast.LENGTH_LONG).show();
-            abrirVentana();
+            Toast.makeText(this, "Producto guardado", Toast.LENGTH_SHORT).show();
+            abrirLista();
         } catch (Exception e) {
-            mostrarMsg("Error al guardar: " + e.getMessage());
+            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(urlCompletaFoto);
+                imgProducto.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                Toast.makeText(this, "Error al cargar imagen", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

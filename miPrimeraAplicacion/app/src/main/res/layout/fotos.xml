@@ -22,7 +22,6 @@
         android:id="@+id/lblNombreAdaptador"
         android:layout_toEndOf="@id/imgFotoAdaptador"
         android:layout_marginTop="10dp"
-        android:text="Juan Perez"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +32,7 @@
         android:layout_below="@id/lblNombreAdaptador"
         android:layout_toEndOf="@id/imgFotoAdaptador"
         android:layout_marginTop="10dp"
-        android:text="2626-1212"
+
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +43,7 @@
         android:layout_below="@id/lblTelefonoAdaptador"
         android:layout_toEndOf="@id/imgFotoAdaptador"
         android:layout_marginTop="10dp"
-        android:text="juan@gmail.com"
+
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

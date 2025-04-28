@@ -1,7 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Base application theme for dark mode -->
     <style name="Base.Theme.MiPrimeraAplicacion" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Primary brand color for dark theme -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+
+        <!-- Background and Surface colors -->
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="colorSurface">@color/surfaceColor</item>
+
+        <!-- Error color -->
+        <item name="colorError">@color/errorColor</item>
     </style>
+
 </resources>

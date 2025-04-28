@@ -1,73 +1,29 @@
 package com.example.miprimeraaplicacion;
-
 public class productos {
+    private String idProducto, nombre, imagenUrl;
+    private double precio, costo;
+    private int stock;
 
-    private String nombre;
-    private String urlFoto;
-    private double precio;
-    private double costo;
-    private double ganancia;
-
-
-    public productos(String nombre, String urlFoto, double precio, double costo) {
+    public productos(String idProducto, String nombre, String imagenUrl, double precio, double costo, int stock) {
+        this.idProducto = idProducto;
         this.nombre = nombre;
-        this.urlFoto = urlFoto;
+        this.imagenUrl = imagenUrl;
         this.precio = precio;
         this.costo = costo;
-        this.ganancia = calcularGanancia();
+        this.stock = stock;
     }
 
+    // Getters
+    public String getIdProducto() { return idProducto; }
+    public String getNombre() { return nombre; }
+    public String getImagenUrl() { return imagenUrl; }
+    public double getPrecio() { return precio; }
+    public double getCosto() { return costo; }
+    public int getStock() { return stock; }
 
-    private double calcularGanancia() {
-        return this.precio - this.costo;
-    }
-
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getUrlFoto() {
-        return urlFoto;
-    }
-
-    public void setUrlFoto(String urlFoto) {
-        this.urlFoto = urlFoto;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-        this.ganancia = calcularGanancia();
-    }
-
-    public double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(double costo) {
-        this.costo = costo;
-        this.ganancia = calcularGanancia();
-    }
-
-    public double getGanancia() {
-        return ganancia;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Producto: " + nombre + "\n" +
-                "Precio: " + precio + "\n" +
-                "Costo: " + costo + "\n" +
-                "Ganancia: " + ganancia + "\n" +
-                "Foto: " + urlFoto;
+    // Cálculos
+    public double getGanancia() { return precio - costo; }
+    public double getPorcentajeGanancia() {
+        return costo != 0 ? ((precio - costo) / costo) * 100 : 0;
     }
 }

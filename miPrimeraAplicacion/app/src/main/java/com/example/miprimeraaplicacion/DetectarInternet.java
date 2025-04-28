@@ -1,27 +1,20 @@
 package com.example.miprimeraaplicacion;
 
-import android.content.Context;
+import  android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-public class DetectarInternet {
+public class detectarInternet {
     private Context context;
-    public DetectarInternet(Context context){
+
+    public detectarInternet(Context context) {
         this.context = context;
     }
-    public boolean hayConexionInternet(){
-        ConnectivityManager connectivityManager =
+
+    public boolean hayConexionInternet() {
+        ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager==null) return false;
-
-        NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
-        if(info==null) return false;
-
-        for(int i=0; i<info.length; i++){
-            if(info[i].getState()==NetworkInfo.State.CONNECTED){
-                return true;
-            }
-        }
-        return false;
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 }

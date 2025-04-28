@@ -1,67 +1,88 @@
 package com.example.miprimeraaplicacion;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
-import java.io.BufferedInputStream;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class enviarDatosServidor extends AsyncTask<String, String, String> {
-    Context context;
-    String respuesta = "";
-    HttpURLConnection httpURLConnection;
-    public enviarDatosServidor(Context context){
+public class enviarDatosServidor extends AsyncTask<String, Void, String> {
+    private Context context;
+
+    public enviarDatosServidor(Context context) {
         this.context = context;
     }
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-    }
-    @Override
-    protected String doInBackground(String... parametros) {
-        String jsonResponse = "";
-        String jsonDatos = parametros[0];
-        String metodo = parametros[1];
-        String _url = parametros[2];
-        BufferedReader bufferedReader;
-        try{
-            URL url = new URL(_url);
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setDoInput(true);
-            httpURLConnection.setDoOutput(true);
-            httpURLConnection.setRequestMethod(metodo);
-            httpURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpURLConnection.setRequestProperty("Accept", "application/json");
-            httpURLConnection.setRequestProperty("Authorization", "Basic " + utilidades.credencialesCodificadas);
 
-            Writer writer = new BufferedWriter(new OutputStreamWriter(httpURLConnection.getOutputStream(), "UTF-8"));
+    @Override
+    protected String doInBackground(String... params) {
+        String jsonDatos = params[0];
+        String metodo = params[1];
+        String urlString = params[2];
+
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(urlString);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod(metodo);
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setRequestProperty("Authorization", "Basic " + utilidades.credencialesCodificadas);
+            urlConnection.setDoOutput(true);
+            urlConnection.setDoInput(true);
+
+            // Escribir datos
+            OutputStream os = urlConnection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
             writer.write(jsonDatos);
+            writer.flush();
             writer.close();
+            os.close();
 
-            InputStream inputStream = httpURLConnection.getInputStream();
-            if( inputStream==null ) return null;
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            respuesta = bufferedReader.toString();
-
-            String linea;
-            StringBuffer stringBuffer = new StringBuffer();
-            while((linea = bufferedReader.readLine()) != null){
-                stringBuffer.append(linea);
+            // Leer respuesta
+            int responseCode = urlConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK ||
+                    responseCode == HttpURLConnection.HTTP_CREATED) {
+                InputStream is = urlConnection.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line);
+                }
+                br.close();
+                return sb.toString();
+            } else {
+                return "Error: " + responseCode + " " + urlConnection.getResponseMessage();
             }
-            if(stringBuffer.length()==0) return null;
-            jsonResponse = stringBuffer.toString();
-        }catch (Exception e){
-            return e.getMessage();
+        } catch (Exception e) {
+            return "Exception: " + e.getMessage();
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
         }
-        finally {
-            httpURLConnection.disconnect();
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        try {
+            JSONObject json = new JSONObject(result);
+            if (json.has("ok") && json.getBoolean("ok")) {
+                Toast.makeText(context, "Sincronizado con servidor", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Error en servidor: " + result, Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, "Error: " + result, Toast.LENGTH_LONG).show();
         }
-        return jsonResponse;
     }
 }

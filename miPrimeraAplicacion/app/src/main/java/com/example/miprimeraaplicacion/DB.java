@@ -1,23 +1,15 @@
 package com.example.miprimeraaplicacion;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DB extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "walter";
     private static final int DATABASE_VERSION = 1;
-
-
-    private static final String SQLdb = "CREATE TABLE steven  (" +
-            "idproducto TEXT PRIMARY KEY, " +
-            "nombre TEXT, " +
-            "precio TEXT, " +
-            "costo TEXT, " +
-            "ganancias TEXT, " +
-            "urlFoto TEXT)";
+    private static final String SQL_CREATE_TABLE =
+            "CREATE TABLE productos (idProducto TEXT PRIMARY KEY, nombre TEXT, " +
+                    "imagenUrl TEXT, precio REAL, costo REAL, stock INTEGER)";
 
     public DB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,61 +17,39 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQLdb);
+        db.execSQL(SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Aquí puedes manejar las actualizaciones de base de datos si es necesario
-        db.execSQL("DROP TABLE IF EXISTS ListaProductos");
+        db.execSQL("DROP TABLE IF EXISTS productos");
         onCreate(db);
     }
 
     public String administrar_productos(String accion, String[] datos) {
-        SQLiteDatabase db = null;
+        SQLiteDatabase db = getWritableDatabase();
         try {
-            db = this.getWritableDatabase();
-            String mensaje = "ok";
-            ContentValues values = new ContentValues();
-
             switch (accion) {
                 case "nuevo":
-                    values.put("idproducto", datos[0]);
-                    values.put("nombre", datos[1]);
-                    values.put("precio", datos[2]);
-                    values.put("costo", datos[3]);
-                    values.put("ganancias", datos[4]);
-                    values.put("urlFoto", datos[5]);
-                    db.insertOrThrow("steven", null, values);
+                    db.execSQL("INSERT INTO productos VALUES (?,?,?,?,?,?)", datos);
                     break;
                 case "modificar":
-                    values.put("nombre", datos[1]);
-                    values.put("precio", datos[2]);
-                    values.put("costo", datos[3]);
-                    values.put("ganancias", datos[4]);
-                    values.put("urlFoto", datos[5]);
-                    db.update("steven", values, "idproducto = ?", new String[]{datos[0]});
+                    db.execSQL("UPDATE productos SET nombre=?, imagenUrl=?, precio=?, costo=?, stock=? WHERE idProducto=?",
+                            new String[]{datos[1], datos[2], datos[3], datos[4], datos[5], datos[0]});
                     break;
                 case "eliminar":
-                    db.delete("steven", "idproducto = ?", new String[]{datos[0]});
+                    db.execSQL("DELETE FROM productos WHERE idProducto=?", new String[]{datos[0]});
                     break;
-                default:
-                    return "Acción no reconocida";
             }
-            db.setTransactionSuccessful();
-            return mensaje;
-        } catch (SQLException e) {
-            return "Error: " + e.getMessage();
+            return "ok";
+        } catch (Exception e) {
+            return e.getMessage();
         } finally {
-            if (db != null) {
-                db.endTransaction();
-                db.close();
-            }
+            db.close();
         }
     }
 
-    public Cursor lista_steven() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM steven", null);
+    public Cursor lista_productos() {
+        return getReadableDatabase().rawQuery("SELECT * FROM productos", null);
     }
 }
