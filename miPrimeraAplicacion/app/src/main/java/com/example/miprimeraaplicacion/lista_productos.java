@@ -40,18 +40,36 @@ public class lista_productos extends AppCompatActivity {
         adapter = new AdaptadorProductos(this, alProductos);
         ltsProductos.setAdapter(adapter);
 
+        // Botón de nuevo producto
         fabAgregarProducto.setOnClickListener(v -> {
             Intent intent = new Intent(lista_productos.this, MainActivity.class);
             intent.putExtra("accion", "nuevo");
             startActivity(intent);
         });
 
+        // Click normal: modificar producto
         ltsProductos.setOnItemClickListener((parent, view, position, id) -> {
             productos productoSeleccionado = alProductos.get(position);
             Intent intent = new Intent(lista_productos.this, MainActivity.class);
             intent.putExtra("accion", "modificar");
             intent.putExtra("idProducto", productoSeleccionado.getIdProducto());
             startActivity(intent);
+        });
+
+        // Long click: eliminar producto
+        ltsProductos.setOnItemLongClickListener((parent, view, position, id) -> {
+            productos productoSeleccionado = alProductos.get(position);
+
+            new androidx.appcompat.app.AlertDialog.Builder(lista_productos.this)
+                    .setTitle("Eliminar Producto")
+                    .setMessage("¿Estás seguro de eliminar el producto " + productoSeleccionado.getNombre() + "?")
+                    .setPositiveButton("Sí", (dialog, which) -> {
+                        eliminarProducto(productoSeleccionado.getIdProducto());
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+
+            return true;
         });
 
         buscarProductos();
@@ -89,8 +107,7 @@ public class lista_productos extends AppCompatActivity {
                 Toast.makeText(this, "No hay productos locales", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Error al cargar productos: " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error al cargar productos: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -126,8 +143,7 @@ public class lista_productos extends AppCompatActivity {
             alProductosCopia.addAll(alProductos);
             adapter.notifyDataSetChanged();
         } catch (Exception e) {
-            Toast.makeText(this, "Error al procesar respuesta: " + e.getMessage(),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error al procesar respuesta: " + e.getMessage(), Toast.LENGTH_LONG).show();
             cargarProductosLocales();
         }
     }
@@ -157,6 +173,18 @@ public class lista_productos extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+    }
+
+    private void eliminarProducto(String idProducto) {
+        String[] datos = {idProducto};
+        String respuesta = db.administrar_productos("eliminar", datos);
+
+        if ("ok".equals(respuesta)) {
+            Toast.makeText(this, "Producto eliminado", Toast.LENGTH_SHORT).show();
+            cargarProductos();
+        } else {
+            Toast.makeText(this, "Error al eliminar producto: " + respuesta, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

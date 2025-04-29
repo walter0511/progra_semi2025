@@ -31,7 +31,17 @@ public class DB extends SQLiteOpenHelper {
         try {
             switch (accion) {
                 case "nuevo":
-                    db.execSQL("INSERT INTO productos VALUES (?,?,?,?,?,?)", datos);
+                    // Antes de insertar, verificar si existe
+                    Cursor cursor = db.rawQuery("SELECT idProducto FROM productos WHERE idProducto = ?", new String[]{datos[0]});
+                    if (cursor.moveToFirst()) {
+                        // Ya existe: actualizar
+                        db.execSQL("UPDATE productos SET nombre=?, imagenUrl=?, precio=?, costo=?, stock=? WHERE idProducto=?",
+                                new String[]{datos[1], datos[2], datos[3], datos[4], datos[5], datos[0]});
+                    } else {
+                        // No existe: insertar
+                        db.execSQL("INSERT INTO productos VALUES (?,?,?,?,?,?)", datos);
+                    }
+                    cursor.close();
                     break;
                 case "modificar":
                     db.execSQL("UPDATE productos SET nombre=?, imagenUrl=?, precio=?, costo=?, stock=? WHERE idProducto=?",
