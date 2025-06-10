@@ -1,45 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CAMERA>"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
-        android:usesCleartextTraffic="true"
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/Theme.MiPrimeraAplicacion">
-
-        <!-- Actividad Principal - Exportada explícitamente -->
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MiPrimerAplicacion"
+        tools:targetApi="31"
+        android:requestLegacyExternalStorage="true"> <activity
+        android:name=".SplashActivity"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+        <activity
+            android:name=".SeleccionLoginActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
+        <activity android:name=".ActivityLoginUsuario"
+            android:exported="true"/>
 
-        <!-- Lista de productos - No necesita exported=false porque no tiene intent-filter -->
-        <activity
-            android:name=".lista_productos"
-            android:exported="false" />
+        <activity android:name=".ActivityLoginAgente"
+            android:exported="true"/>
 
-        <!-- Editar producto - No necesita exported=false porque no tiene intent-filter -->
-        <activity
-            android:name=".EditarProductoActivity"
-            android:exported="false" />
+        <activity android:name=".DelConductorActivity"
+            android:exported="true"/>
 
-        <!-- Proveedor de archivos -->
+        <activity android:name=".DelVehiculoActivity"/>
+
+        <activity android:name=".DecomisosAutoridadOtrosActivity"/>
+
+        <activity android:name=".MultasActivity"/>
+
+        <activity android:name=".UbicacionActivity"/>
+
+        <activity android:name=".falta"
+            android:exported="true"/>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.miprimeraaplicacion.fileprovider"
+            android:authorities="com.example.miprimeraplicacion.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

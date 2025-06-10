@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Título principal -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recibo de Esquela"
+            android:textColor="#FFFFFF"
+            android:background="#002D72"
+            android:padding="12dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Subtítulo -->
+        <TextView
+            android:id="@+id/subTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Del Conductor"
+            android:textColor="#FFFFFF"
+            android:background="#002D72"
+            android:padding="12dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Licencia (con texto más grande) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Licencia"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/licenciaInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Licencia"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Apellidos -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1er Apellido"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/apellido1Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="1er Apellido"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2do Apellido"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/apellido2Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="2do Apellido"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3er Apellido (opcional)"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/apellido3Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="3er Apellido (opcional)"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Nombres -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1er Nombre"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/nombre1Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="1er Nombre"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2do Nombre"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/nombre2Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="2do Nombre"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3er Nombre (opcional)"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/nombre3Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="3er Nombre (opcional)"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Clase (con texto más grande) -->
+        <TextView
+            android:id="@+id/claseTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clase"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <!-- CheckBoxes de Clase -->
+        <CheckBox
+            android:id="@+id/claseExtranjera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Extranjera"
+            android:textColor="#002D72" />
+
+        <CheckBox
+            android:id="@+id/claseJuvenil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Juvenil"
+            android:textColor="#002D72" />
+
+        <CheckBox
+            android:id="@+id/claseMotocicleta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Motocicleta"
+            android:textColor="#002D72" />
+
+        <CheckBox
+            android:id="@+id/claseParticular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Particular"
+            android:textColor="#002D72" />
+
+        <CheckBox
+            android:id="@+id/clasePesadaT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pesada-T"
+            android:textColor="#002D72" />
+
+        <CheckBox
+            android:id="@+id/clasePesadaL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pesada-L"
+            android:textColor="#002D72" />
+
+        <CheckBox
+            android:id="@+id/claseLiviana"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liviana"
+            android:textColor="#002D72"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSiguiente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Siguiente →"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#002D72"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:paddingVertical="6dp"
+            android:paddingHorizontal="12dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

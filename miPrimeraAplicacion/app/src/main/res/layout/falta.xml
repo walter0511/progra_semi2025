@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Título principal -->
+        <TextView
+            android:id="@+id/tvTituloDecomisos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DE LA FALTA"
+            android:textColor="#FFFFFF"
+            android:background="#002D72"
+            android:padding="12dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Código de la falta -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CÓDIGO DE LA FALTA"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etCodigoFalta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese el código de la falta"
+            android:inputType="text"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Clasificación -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLASIFICACIÓN"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupClasificacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/radioTransito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tránsito"
+                android:textColor="#002D72"
+                android:layout_marginBottom="8dp"/>
+
+            <RadioButton
+                android:id="@+id/radioTransporte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transporte"
+                android:textColor="#002D72"
+                android:layout_marginBottom="8dp"/>
+
+            <RadioButton
+                android:id="@+id/radioCarga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carga"
+                android:textColor="#002D72"/>
+        </RadioGroup>
+
+        <!-- Fecha -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha"
+            android:textStyle="bold"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etFechaDecomiso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Selecciona la fecha"
+            android:focusable="false"
+            android:inputType="date"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Hora -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora"
+            android:textStyle="bold"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <TimePicker
+            android:id="@+id/timePickerDecomiso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Observaciones -->
+        <EditText
+            android:id="@+id/etObservacionesDecomiso"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Observaciones"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Evidencia -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EVIDENCIA"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/imgEvidencia"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_camera"
+                android:tint="#002D72" />
+
+            <TextView
+                android:id="@+id/tvEvidenciaTexto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Tomar evidencia"
+                android:textSize="16sp"
+                android:textColor="#002D72"
+                android:paddingStart="12dp" />
+        </LinearLayout>
+
+        <!-- Aquí el contenedor horizontal para las fotos tomadas -->
+        <LinearLayout
+            android:id="@+id/layoutFotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Botón Siguiente -->
+        <Button
+            android:id="@+id/btnSiguiente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Siguiente →"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#002D72"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:paddingVertical="6dp"
+            android:paddingHorizontal="12dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

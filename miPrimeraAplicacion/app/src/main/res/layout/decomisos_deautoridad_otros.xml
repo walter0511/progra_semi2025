@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Título principal -->
+        <TextView
+            android:id="@+id/tvTituloDecomisos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DECOMISOS"
+            android:textColor="#FFFFFF"
+            android:background="#002D72"
+            android:padding="12dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Sección: ELEMENTOS DECOMISADOS -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ELEMENTOS DECOMISADOS"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp"/>
+
+        <CheckBox
+            android:id="@+id/cbVehiculos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehículos"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbTarjetaCirculacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tarjeta de circulación"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbLicencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Licencia"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbPlacas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Placas"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbPoliza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Póliza"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbPermisosLinea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Permisos de línea"
+            android:textColor="#002D72"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Sección: DE LA AUTORIDAD -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DE LA AUTORIDAD"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp"/>
+
+        <CheckBox
+            android:id="@+id/cbBA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BA"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbEJ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EJ"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbYSU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Y SU"
+            android:textColor="#002D72"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/etONI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ONI"
+            android:inputType="number"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/etPuestoPolicial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Puesto Policial"
+            android:inputType="text"
+            android:background="@drawable/edit_text_bg"
+            android:padding="12dp"
+            android:textColor="#002D72"
+            android:textColorHint="#6E6E6E"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Sección: OTROS -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OTROS"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#002D72"
+            android:layout_marginBottom="8dp"/>
+
+        <CheckBox
+            android:id="@+id/cbConductorAusente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conductor ausente"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbSeNegoFirmar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Se negó a firmar"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbAparatoLaser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aparato láser"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbPruebaAlcotest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prueba de alcotest"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbDestruyoEsquela"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Destruyó la esquela"
+            android:textColor="#002D72"/>
+
+        <CheckBox
+            android:id="@+id/cbVehiculoRemolcado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehículo remolcado"
+            android:textColor="#002D72"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- Botón Siguiente -->
+        <Button
+            android:id="@+id/btnSiguiente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Siguiente →"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#002D72"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:paddingVertical="6dp"
+            android:paddingHorizontal="12dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

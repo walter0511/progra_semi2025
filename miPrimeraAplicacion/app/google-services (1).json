@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "31965834819",
+    "firebase_url": "https://proyectofinalmultas-default-rtdb.firebaseio.com",
+    "project_id": "proyectofinalmultas",
+    "storage_bucket": "proyectofinalmultas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31965834819:android:7a48e5b03688a885932ef6",
+        "android_client_info": {
+          "package_name": "com.example.miprimeraplicacion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKThsaUTjjoKBYBp7uq49ZzhZOhogg8hA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
